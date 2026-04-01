@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proposta di Modernizzazione Web — San Pietro Formaggi</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lora:wght@400;500&display=swap');
+
+    :root {
+      --gold: #C8902A;
+      --gold-light: #E8A83E;
+      --brown-dark: #3B2A1A;
+      --brown-mid: #6B4A2A;
+      --cream: #F5F0E8;
+      --surface: #FAF7F2;
+      --edge: #E8DDD0;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    @media print {
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+    }
+
+    body {
+      font-family: 'Lora', Georgia, serif;
+      background: #fff;
+      color: var(--brown-dark);
+      font-size: 11pt;
+      line-height: 1.7;
+    }
+
+    /* ── COVER PAGE ── */
+    .cover {
+      width: 100%;
+      min-height: 100vh;
+      background: var(--brown-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 40px;
+      page-break-after: always;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 40%, rgba(200,144,42,0.18) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 70%, rgba(200,144,42,0.10) 0%, transparent 50%);
+    }
+
+    .cover-inner { position: relative; z-index: 1; }
+
+    .cover-tag {
+      font-family: 'Lora', serif;
+      font-size: 10pt;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 24px;
+    }
+
+    .cover h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 42pt;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .cover h1 span { color: var(--gold-light); }
+
+    .cover-subtitle {
+      font-family: 'Playfair Display', serif;
+      font-size: 16pt;
+      color: var(--edge);
+      margin-bottom: 40px;
+    }
+
+    .cover-divider {
+      width: 80px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto 40px;
+    }
+
+    .cover-meta {
+      font-size: 10pt;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 1px;
+    }
+
+    .cover-badge {
+      margin-top: 48px;
+      display: inline-block;
+      border: 1px solid rgba(200,144,42,0.4);
+      border-radius: 4px;
+      padding: 10px 24px;
+      font-size: 9pt;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold-light);
+    }
+
+    /* ── CONTENT PAGES ── */
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 56px 48px;
+    }
+
+    .page-break { page-break-before: always; }
+
+    /* Section heading */
+    .section-label {
+      font-size: 8pt;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22pt;
+      font-weight: 600;
+      color: var(--brown-dark);
+      margin-bottom: 20px;
+      line-height: 1.25;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 13pt;
+      font-weight: 600;
+      color: var(--brown-mid);
+      margin: 28px 0 12px;
+    }
+
+    p { margin-bottom: 14px; color: #4a3728; }
+
+    /* Ornament divider */
+    .ornament {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 32px 0;
+    }
+    .ornament::before, .ornament::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--edge);
+    }
+    .ornament-dot {
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 10pt;
+    }
+
+    thead tr {
+      background: var(--brown-dark);
+      color: #fff;
+    }
+
+    thead th {
+      font-family: 'Lora', serif;
+      font-weight: 500;
+      padding: 10px 14px;
+      text-align: left;
+      letter-spacing: 0.5px;
+    }
+
+    tbody tr:nth-child(even) { background: var(--surface); }
+    tbody tr:nth-child(odd) { background: #fff; }
+
+    tbody td {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--edge);
+      vertical-align: top;
+    }
+
+    td:first-child { color: var(--brown-mid); font-weight: 500; }
+
+    td strong { color: var(--brown-dark); }
+
+    /* Highlight box */
+    .highlight-box {
+      background: var(--cream);
+      border-left: 3px solid var(--gold);
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .highlight-box p { margin: 0; font-size: 10pt; color: var(--brown-mid); }
+
+    /* Price block */
+    .price-block {
+      background: var(--brown-dark);
+      color: #fff;
+      border-radius: 8px;
+      padding: 32px 36px;
+      margin: 24px 0;
+    }
+
+    .price-block h3 {
+      color: var(--gold-light);
+      margin-top: 0;
+      font-size: 14pt;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .price-row:last-child { border-bottom: none; }
+
+    .price-row .label { color: rgba(255,255,255,0.7); font-size: 10pt; }
+    .price-row .value { color: #fff; font-weight: 500; font-size: 11pt; }
+    .price-row.total .label { color: var(--gold-light); font-size: 11pt; }
+    .price-row.total .value { color: var(--gold-light); font-size: 16pt; font-family: 'Playfair Display', serif; }
+
+    /* Timeline */
+    .timeline { margin: 20px 0; }
+
+    .timeline-item {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 14px;
+      align-items: flex-start;
+    }
+
+    .timeline-day {
+      min-width: 64px;
+      background: var(--gold);
+      color: #fff;
+      text-align: center;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 9pt;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    .timeline-content { font-size: 10pt; color: #4a3728; padding-top: 4px; }
+
+    /* Savings table */
+    .savings-tag {
+      display: inline-block;
+      background: #e8f5e9;
+      color: #2e7d32;
+      font-size: 9pt;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 500;
+    }
+
+    /* Footer */
+    .doc-footer {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--edge);
+      text-align: center;
+      font-size: 9pt;
+      color: #a09080;
+      letter-spacing: 0.5px;
+    }
+
+    /* Closing quote */
+    .closing {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 32px 40px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .closing blockquote {
+      font-family: 'Playfair Display', serif;
+      font-size: 15pt;
+      font-style: italic;
+      color: var(--brown-dark);
+      margin-bottom: 8px;
+    }
+
+    .closing cite {
+      font-size: 9pt;
+      color: var(--gold);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-style: normal;
+    }
+
+    /* Steps */
+    .steps { counter-reset: step; margin: 20px 0; }
+
+    .step {
+      counter-increment: step;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+
+    .step-num {
+      min-width: 28px; height: 28px;
+      background: var(--gold);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10pt;
+      font-weight: 600;
+      margin-top: 1px;
+    }
+
+    .step-text { font-size: 10pt; color: #4a3728; padding-top: 4px; }
+    .step-text strong { color: var(--brown-dark); }
+  </style>
+</head>
+<body>
+
+  <!-- ══ COVER ══ -->
+  <div class="cover">
+    <div class="cover-inner">
+      <p class="cover-tag">Proposta commerciale · Marzo 2026</p>
+      <h1>San Pietro<br/><span>Formaggi</span></h1>
+      <p class="cover-subtitle">Modernizzazione del sito web</p>
+      <div class="cover-divider"></div>
+      <p class="cover-meta">Da WordPress a una piattaforma moderna,<br/>veloce e facile da gestire.</p>
+      <div class="cover-badge">Documento riservato</div>
+    </div>
+  </div>
+
+  <!-- ══ PAGE 1: IL PROBLEMA + LA SOLUZIONE ══ -->
+  <div class="page">
+
+    <p class="section-label">01 · Il problema attuale</p>
+    <h2>Perché il sito attuale<br/>frena la vostra immagine</h2>
+
+    <p>
+      Il vostro sito attuale è costruito su WordPress con WooCommerce e una serie di plugin aggiuntivi.
+      Questa struttura era pratica anni fa, ma oggi comporta costi nascosti, lentezza e un'immagine
+      che non rispecchia la qualità artigianale dei vostri formaggi.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Problema</th>
+          <th>Impatto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>WordPress + 8+ plugin YITH</td><td>Ogni plugin è un rischio di sicurezza e un aggiornamento continuo</td></tr>
+        <tr><td>jQuery + Revolution Slider</td><td>Tecnologia del 2012, appesantisce il sito sui cellulari</td></tr>
+        <tr><td>WooCommerce senza vendite dirette</td><td>Tutto il peso di un e-commerce che non viene usato come tale</td></tr>
+        <tr><td>Velocità di caricamento lenta</td><td>Google penalizza i siti lenti nei risultati di ricerca</td></tr>
+        <tr><td>Design da template generico</td><td>Non comunica la qualità artigianale del prodotto</td></tr>
+      </tbody>
+    </table>
+
+    <div class="ornament"><div class="ornament-dot"></div></div>
+
+    <p class="section-label">02 · La soluzione</p>
+    <h2>Tecnologia moderna,<br/>risultati concreti</h2>
+
+    <p>
+      Il nuovo sito viene costruito con le stesse tecnologie usate da grandi aziende internazionali,
+      adattate alle esigenze di una realtà artigianale locale.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Tecnologia</th>
+          <th>Perché</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Next.js 16</strong></td><td>Il framework web più moderno, veloce e ottimizzato per Google</td></tr>
+        <tr><td><strong>React 19</strong></td><td>Interfaccia ultrarapida, senza ricaricamenti di pagina</td></tr>
+        <tr><td><strong>Sanity CMS</strong></td><td>Pannello di gestione contenuti semplice — senza WordPress</td></tr>
+        <tr><td><strong>Tailwind CSS 4</strong></td><td>Design preciso e 100% personalizzato per il brand</td></tr>
+        <tr><td><strong>Resend</strong></td><td>Invio email affidabile e professionale dal modulo contatti</td></tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <!-- ══ PAGE 2: CONFRONTO ══ -->
+  <div class="page page-break">
+
+    <p class="section-label">03 · Confronto diretto</p>
+    <h2>Prima e dopo</h2>
+
+    <h3>Velocità e prestazioni</h3>
+
+    <table>
+      <thead>
+        <tr><th></th><th>Sito attuale</th><th>Nuovo sito</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Tempo di caricamento</td><td>3–6 secondi</td><td>&lt; 1 secondo</td></tr>
+        <tr><td>Google PageSpeed</td><td>~40–60 / 100</td><td>90–100 / 100</td></tr>
+        <tr><td>SEO tecnico</td><td>Base</td><td>Avanzato (metadata, sitemap)</td></tr>
+        <tr><td>Ottimizzazione mobile</td><td>Responsive base</td><td>Mobile-first</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Gestione dei contenuti</h3>
+
+    <table>
+      <thead>
+        <tr><th></th><th>WordPress attuale</th><th>Sanity CMS nuovo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Aggiungere un prodotto</td><td>Form complessa con 10+ campi</td><td>Form pulita, solo l'essenziale</td></tr>
+        <tr><td>Caricare immagini</td><td>Libreria media confusa</td><td>Drag &amp; drop con ottimizzazione auto</td></tr>
+        <tr><td>Aggiornare le ricette</td><td>Editor a blocchi complicato</td><td>Editor semplice, tipo Word</td></tr>
+        <tr><td>Manutenzione</td><td>Aggiornamenti continui dei plugin</td><td>Nessun plugin, nessuna dipendenza fragile</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Design e immagine del brand</h3>
+
+    <table>
+      <thead>
+        <tr><th></th><th>Sito attuale</th><th>Nuovo sito</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Palette colori</td><td>Arancione generico da template</td><td>Oro artigianale + crema elegante</td></tr>
+        <tr><td>Tipografia</td><td>Lato (sans-serif generica)</td><td>Playfair Display + Lora (serif italiane)</td></tr>
+        <tr><td>Sensazione generale</td><td>E-commerce da template</td><td>Marchio artigianale di alta qualità</td></tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <!-- ══ PAGE 3: PAGINE + RISPARMIO ══ -->
+  <div class="page page-break">
+
+    <p class="section-label">04 · Contenuto incluso</p>
+    <h2>Le pagine del nuovo sito</h2>
+
+    <table>
+      <thead>
+        <tr><th>Pagina</th><th>Contenuto</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Home</strong></td><td>Hero, categorie prodotti, prodotti in evidenza, storia aziendale, CTA</td></tr>
+        <tr><td><strong>Catalogo</strong></td><td>Tutti i 23 formaggi con filtro per categoria (Freschi, Semistagionati, Stagionati)</td></tr>
+        <tr><td><strong>Dettaglio prodotto</strong></td><td>Scheda completa con descrizione, origine, tipo di latte, richiesta preventivo</td></tr>
+        <tr><td><strong>Ricette</strong></td><td>Ricette collegate ai prodotti, con ingredienti e preparazione</td></tr>
+        <tr><td><strong>Chi Siamo</strong></td><td>Storia, valori aziendali, processo artigianale in 4 fasi</td></tr>
+        <tr><td><strong>Contatti</strong></td><td>Modulo di contatto con email automatica a info@sanpietroformaggi.com</td></tr>
+        <tr><td><strong>Pannello CMS</strong></td><td>Accesso privato per gestire contenuti senza toccare il codice</td></tr>
+      </tbody>
+    </table>
+
+    <div class="ornament"><div class="ornament-dot"></div></div>
+
+    <p class="section-label">05 · Risparmio annuale</p>
+    <h2>Costi che non pagherete più</h2>
+
+    <p>Con il nuovo sito il cliente elimina una serie di costi ricorrenti legati all'ecosistema WordPress:</p>
+
+    <table>
+      <thead>
+        <tr><th>Spesa attuale</th><th>Con il nuovo sito</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Hosting WordPress (piano con supporto)</td>
+          <td><span class="savings-tag">Hosting moderno più economico o gratuito (Vercel)</span></td>
+        </tr>
+        <tr>
+          <td>Licenze annuali plugin premium YITH</td>
+          <td><span class="savings-tag">Nessun plugin — tutto integrato nel codice</span></td>
+        </tr>
+        <tr>
+          <td>Aggiornamenti e manutenzione WordPress</td>
+          <td><span class="savings-tag">Nessun aggiornamento critico di sicurezza</span></td>
+        </tr>
+        <tr>
+          <td><strong>Dominio attuale</strong></td>
+          <td><strong>Si conserva invariato</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="highlight-box">
+      <p>In molti casi il risparmio annuale su plugin e hosting supera i <strong>€ 200–300 l'anno</strong>, il che significa che il nuovo sito si ripaga in 2–3 anni solo con i costi eliminati.</p>
+    </div>
+
+  </div>
+
+  <!-- ══ PAGE 4: INVESTIMENTO + TEMPI + PROSSIMI PASSI ══ -->
+  <div class="page page-break">
+
+    <p class="section-label">06 · Investimento</p>
+    <h2>Prezzo e modalità di pagamento</h2>
+
+    <div class="price-block">
+      <h3>Riepilogo economico</h3>
+      <div class="price-row">
+        <span class="label">Acconto all'avvio del progetto</span>
+        <span class="value">€ 300</span>
+      </div>
+      <div class="price-row">
+        <span class="label">Saldo alla pubblicazione in produzione</span>
+        <span class="value">€ 300</span>
+      </div>
+      <div class="price-row total">
+        <span class="label">Totale investimento</span>
+        <span class="value">€ 600</span>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Incluso nel prezzo</th><th>Non incluso</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Design personalizzato</td><td>Dominio (si conserva l'attuale)</td></tr>
+        <tr><td>Sviluppo di tutte le 7 pagine</td><td>Fotografia dei prodotti</td></tr>
+        <tr><td>Configurazione CMS Sanity</td><td></td></tr>
+        <tr><td>Modulo di contatto con email automatica</td><td></td></tr>
+        <tr><td>Pubblicazione online (deploy)</td><td></td></tr>
+      </tbody>
+    </table>
+
+    <div class="highlight-box">
+      <p>Un progetto equivalente in altre città italiane costerebbe oltre <strong>€ 1.000</strong>. Il prezzo proposto riflette il contesto locale di Castronovo di Sicilia e il rapporto di fiducia con il cliente.</p>
+    </div>
+
+    <div class="ornament"><div class="ornament-dot"></div></div>
+
+    <p class="section-label">07 · Tempi di consegna</p>
+    <h2>Cronogramma: 1 settimana</h2>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-day">Giorno 1–2</div>
+        <div class="timeline-content">Caricamento dei 23 prodotti reali nel CMS con foto e descrizioni</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-day">Giorno 3–4</div>
+        <div class="timeline-content">Collegamento CMS → pagine, rifiniture di design e adattamento mobile</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-day">Giorno 5</div>
+        <div class="timeline-content">Modulo di contatto, test su tutti i dispositivi e browser</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-day">Giorno 6</div>
+        <div class="timeline-content">Revisione con il cliente, eventuali correzioni e aggiustamenti</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-day">Giorno 7</div>
+        <div class="timeline-content">Deploy finale e pubblicazione online</div>
+      </div>
+    </div>
+
+    <div class="ornament"><div class="ornament-dot"></div></div>
+
+    <p class="section-label">08 · Prossimi passi</p>
+    <h2>Come iniziare</h2>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Approvazione della proposta</strong> — conferma da parte del cliente</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Acconto di € 300</strong> — per avviare i lavori</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Materiali dal cliente</strong> — foto e descrizioni dei 23 prodotti</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Sviluppo</strong> — 1 settimana di lavoro</div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Pubblicazione e saldo</strong> — sito online, pagamento del restante € 300</div></div>
+    </div>
+
+    <div class="closing">
+      <blockquote>"Lo stesso di sempre, ma come non l'avete mai visto."</blockquote>
+      <cite>Il formaggio artigianale di San Pietro merita un sito web all'altezza.</cite>
+    </div>
+
+    <div class="doc-footer">
+      San Pietro Formaggi · Proposta di Modernizzazione Web · Marzo 2026
+    </div>
+
+  </div>
+
+</body>
+</html>
