@@ -19,9 +19,6 @@ export default function Footer() {
               <p className="font-display text-xl font-semibold" style={{ color: '#DD4F22' }}>
                 San Pietro Formaggi
               </p>
-              <p className="text-[10px] tracking-[0.22em] uppercase mt-0.5" style={{ color: '#FBC703' }}>
-                Caseificio Artigianale
-              </p>
             </div>
             <p className="text-sm leading-relaxed" style={{ color: '#E8DDD0', opacity: 0.8 }}>
               Da generazioni produciamo formaggi artigianali nel cuore della Sicilia, nel rispetto
