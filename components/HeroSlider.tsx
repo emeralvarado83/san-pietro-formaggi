@@ -8,7 +8,8 @@ const slides = [
   {
     image: '/imagenes-slider/panorama-castronovo-di-sicilia.jpg',
     eyebrow: 'Castronovo di Sicilia · Sicilia',
-    title: 'Benvenuto',
+    title: 'Formaggi freschi, semistagionati e stagionati siciliani',
+    titleClass: 'font-display text-3xl sm:text-4xl lg:text-5xl font-semibold mb-6 leading-[1.15]',
     text: "L'obiettivo di questa azienda è quello di proporre al mercato prodotti selezionati di alta qualità, curandone i dettagli nelle vari fasi di lavorazione con la pazienza e la maestria nel processo di stagionatura.",
     cta: { label: 'Vedi Prodotti', href: '/i-nostri-formaggi' },
   },
@@ -135,7 +136,7 @@ export default function HeroSlider() {
 
           {/* Title */}
           <h1
-            className="font-display text-5xl sm:text-6xl lg:text-7xl font-semibold mb-6 leading-[1.1]"
+            className={slide.titleClass ?? 'font-display text-5xl sm:text-6xl lg:text-7xl font-semibold mb-6 leading-[1.1]'}
             style={{ color: '#FDF8F0' }}
           >
             {slide.title}

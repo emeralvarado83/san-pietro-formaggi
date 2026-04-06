@@ -4,7 +4,7 @@ import { getProdotti, SanityProdotto } from '@/lib/sanity'
 import { categories, categoryDescriptions } from '@/lib/data'
 
 export const metadata: Metadata = {
-  title: 'Catalogo',
+  title: 'I Nostri Formaggi',
   description: 'Scopri tutti i formaggi artigianali di San Pietro Formaggi: freschi, semistagionati e stagionati.',
 }
 

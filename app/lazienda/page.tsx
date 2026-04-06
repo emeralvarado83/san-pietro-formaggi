@@ -3,8 +3,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Chi Siamo',
-  description: 'La storia di San Pietro Formaggi, caseificio artigianale di Castronovo di Sicilia (PA).',
+  title: "L'azienda",
+  description: "La storia di San Pietro Formaggi, azienda familiare di Castronovo di Sicilia (PA).",
 }
 
 export default function ChiSiamoPage() {

@@ -1,8 +1,15 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import ProductCard from '@/components/ProductCard'
 import AnimateOnScroll from '@/components/AnimateOnScroll'
 import HeroSlider from '@/components/HeroSlider'
+
+export const metadata: Metadata = {
+  title: {
+    absolute: 'San Pietro Formaggi | Formaggi freschi, semistagionati e stagionati siciliani',
+  },
+}
 import { getProdotti } from '@/lib/sanity'
 import { categories, categoryDescriptions } from '@/lib/data'
 
