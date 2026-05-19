@@ -1,10 +1,19 @@
 import { prisma } from '@/lib/prisma'
 
+export const dynamic = 'force-dynamic'
+
 export default async function AdminDashboard() {
-  const [prodottiCount, ricetteCount] = await Promise.all([
-    prisma.prodotto.count(),
-    prisma.ricetta.count(),
-  ])
+  let prodottiCount = 0
+  let ricetteCount = 0
+
+  try {
+    ;[prodottiCount, ricetteCount] = await Promise.all([
+      prisma.prodotto.count(),
+      prisma.ricetta.count(),
+    ])
+  } catch {
+    console.error('DB non raggiungibile – dashboard admin mostra conteggi a 0')
+  }
 
   return (
     <div className="p-8">
