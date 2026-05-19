@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { SanityProdotto, urlFor } from '@/lib/sanity'
+import type { Prodotto } from '@/lib/db'
 
 const categoryColors: Record<string, { bg: string; text: string }> = {
   Freschi: { bg: 'rgba(200,144,42,0.12)', text: '#FBC703' },
@@ -9,7 +9,7 @@ const categoryColors: Record<string, { bg: string; text: string }> = {
 }
 
 interface ProductCardProps {
-  product: SanityProdotto
+  product: Prodotto
   showCategory?: boolean
 }
 
@@ -35,7 +35,7 @@ export default function ProductCard({ product, showCategory = true }: ProductCar
       >
         {product.immagine ? (
           <Image
-            src={urlFor(product.immagine).width(400).height(300).fit('max').url()}
+            src={product.immagine}
             alt={product.name}
             fill
             className="object-contain p-4"
@@ -78,7 +78,7 @@ export default function ProductCard({ product, showCategory = true }: ProductCar
         </h3>
 
         <Link
-          href={`/i-nostri-formaggi/${product.slug.current}`}
+          href={`/i-nostri-formaggi/${product.slug}`}
           className="inline-flex items-center gap-1.5 text-xs tracking-widest uppercase font-medium transition-colors duration-200 mt-auto"
           style={{ color: '#DD4F22' }}
         >

@@ -21,8 +21,7 @@ export default function Footer() {
               </p>
             </div>
             <p className="text-sm leading-relaxed" style={{ color: '#E8DDD0', opacity: 0.8 }}>
-              Da generazioni produciamo formaggi artigianali nel cuore della Sicilia, nel rispetto
-              della tradizione e del territorio delle Madonie.
+              Da generazioni produciamo formaggi artigianali nel cuore della Sicilia, nel rispetto della tradizione.
             </p>
           </div>
 
@@ -78,7 +77,7 @@ export default function Footer() {
             <div className="space-y-3 text-sm" style={{ color: '#E8DDD0', opacity: 0.85 }}>
               <p className="leading-relaxed">
                 Piazzetta San Giovanni 2<br />
-                Castronovo di Sicilia (PA)<br />
+                90030 Castronovo di Sicilia (PA)<br />
                 Sicilia, Italia
               </p>
               <p>

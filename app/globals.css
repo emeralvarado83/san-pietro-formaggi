@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
   /* Brand Colors */
@@ -211,4 +212,124 @@ html {
 /* Link transition default */
 a {
   transition: color 0.2s ease;
+}
+
+/* ── Rich content from editor ── */
+.rich-content {
+  color: #2D2D2E;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  overflow: hidden;
+}
+.rich-content p {
+  margin-bottom: 0.75rem;
+}
+.rich-content p:last-child {
+  margin-bottom: 0;
+}
+.rich-content ul,
+.rich-content ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.rich-content li {
+  margin-bottom: 0.625rem;
+  padding-left: 1rem;
+  position: relative;
+}
+.rich-content li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #DD4F22;
+}
+.rich-content ol {
+  counter-reset: step;
+}
+.rich-content ol li {
+  padding-left: 2.5rem;
+}
+.rich-content ol li::before {
+  content: counter(step);
+  counter-increment: step;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background-color: rgba(200, 144, 42, 0.15);
+  color: #DD4F22;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0.1em;
+}
+.rich-content strong {
+  font-weight: 600;
+}
+.rich-content em {
+  font-style: italic;
+}
+.rich-content h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  margin-top: 1.5rem;
+}
+.rich-content h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+}
+
+/* Hide empty paragraphs from editor */
+.rich-content p:empty {
+  display: none;
+}
+
+/* Ingredients variant */
+.rich-content--ingredients li {
+  padding-left: 1.25rem;
+}
+.rich-content--ingredients li::before {
+  top: 0.55em;
+  width: 5px;
+  height: 5px;
+}
+
+/* Steps variant — numbers even on <ul> */
+.rich-content--steps {
+  font-size: 1rem;
+  opacity: 0.85;
+}
+.rich-content--steps ul,
+.rich-content--steps ol {
+  counter-reset: step;
+}
+.rich-content--steps li {
+  margin-bottom: 1.25rem;
+  padding-left: 2.75rem;
+}
+.rich-content--steps li::before {
+  content: counter(step);
+  counter-increment: step;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background-color: rgba(200, 144, 42, 0.15);
+  color: #DD4F22;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0.1em;
 }

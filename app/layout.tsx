@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import { Playfair_Display, Lora } from 'next/font/google'
 import './globals.css'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -51,6 +49,12 @@ const localBusinessSchema = {
       opens: '08:00',
       closes: '18:00',
     },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: 'Saturday',
+      opens: '08:00',
+      closes: '12:00',
+    },
   ],
   priceRange: '€€',
   servesCuisine: 'Siciliana',
@@ -86,6 +90,10 @@ export const metadata: Metadata = {
       'Formaggi artigianali prodotti nel cuore della Sicilia, a Castronovo di Sicilia (PA). Pecorini, caciocavalli, ricotte e tradizione casearia siciliana.',
     images: ['/latticini-formaggi.png'],
   },
+  icons: {
+    icon: '/favicon.png',
+    apple: '/favicon.png',
+  },
 }
 
 export default function RootLayout({
@@ -96,9 +104,7 @@ export default function RootLayout({
   return (
     <html lang="it" className={`${playfair.variable} ${lora.variable}`}>
       <body className="min-h-screen flex flex-col">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        {children}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}

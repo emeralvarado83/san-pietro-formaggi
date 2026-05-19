@@ -1,9 +1,8 @@
 import type { MetadataRoute } from 'next'
-import { getProdotti, getRicette } from '@/lib/sanity'
+import { getProdotti, getRicette } from '@/lib/db'
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://sanpietroformaggi.com'
 
-// Regenera el sitemap cada hora en Vercel (ISR)
 export const revalidate = 3600
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -18,12 +17,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]
 
   const productRoutes: MetadataRoute.Sitemap = prodotti.map((p) => ({
-    url: `${BASE_URL}/i-nostri-formaggi/${p.slug.current}`,
+    url: `${BASE_URL}/i-nostri-formaggi/${p.slug}`,
     lastModified: new Date(),
   }))
 
   const recipeRoutes: MetadataRoute.Sitemap = ricette.map((r) => ({
-    url: `${BASE_URL}/ricette/${r.slug.current}`,
+    url: `${BASE_URL}/ricette/${r.slug}`,
     lastModified: new Date(),
   }))
 
