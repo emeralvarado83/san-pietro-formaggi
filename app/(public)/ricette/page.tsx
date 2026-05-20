@@ -13,6 +13,8 @@ export const metadata: Metadata = {
   description: 'Ricette tradizionali siciliane con i formaggi artigianali di San Pietro Formaggi.',
 }
 
+export const dynamic = 'force-dynamic'
+
 export default async function RicettePage() {
   const ricette = await getRicette()
 
