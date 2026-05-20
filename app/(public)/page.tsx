@@ -10,6 +10,9 @@ export const metadata: Metadata = {
     absolute: 'San Pietro Formaggi | Formaggi freschi, semistagionati e stagionati siciliani',
   },
 }
+
+export const dynamic = 'force-dynamic'
+
 import { getProdotti, getFeaturedProducts } from '@/lib/db'
 import { categories, categoryDescriptions } from '@/lib/data'
 
