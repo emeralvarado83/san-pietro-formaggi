@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   description: 'Scopri tutti i formaggi artigianali di San Pietro Formaggi: freschi, semistagionati e stagionati.',
 }
 
+export const dynamic = 'force-dynamic'
+
 export default async function CatalogoPage() {
   const prodotti = await getProdotti()
 
