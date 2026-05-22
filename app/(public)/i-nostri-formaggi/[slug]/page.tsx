@@ -5,6 +5,8 @@ import { notFound } from 'next/navigation'
 import { getProdotti, getProdotto } from '@/lib/db'
 import ShareButtons from '@/components/ShareButtons'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateStaticParams() {
   const prodotti = await getProdotti()
   return prodotti.map((p) => ({ slug: p.slug }))

@@ -25,6 +25,13 @@ const categoryIcons: Record<string, string> = {
 export default async function HomePage() {
   const prodotti = await getProdotti()
   const featuredProducts = await getFeaturedProducts()
+  const tumaCanziata = prodotti.find((product) => {
+    const searchable = `${product.name} ${product.slug}`.toLowerCase()
+    return searchable.includes('tuma') && searchable.includes('canziata')
+  })
+  const tumaCanziataHref = tumaCanziata
+    ? `/i-nostri-formaggi/${tumaCanziata.slug}`
+    : '/i-nostri-formaggi'
 
   return (
     <>
@@ -141,7 +148,7 @@ export default async function HomePage() {
                 in quanto il formaggio veniva messo da parte quando i pastori facevano la transumanza
                 del gregge per i nuovi pascoli.
               </p>
-              <Link href="/i-nostri-formaggi/tuma-canziata" className="btn-gold">
+              <Link href={tumaCanziataHref} className="btn-gold">
                 Scopri di più
               </Link>
             </div>
