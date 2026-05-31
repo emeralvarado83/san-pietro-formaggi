@@ -188,7 +188,7 @@ export default function ContactForm() {
       </button>
 
       <p className="text-xs text-center" style={{ color: '#FBC703', opacity: 0.7 }}>
-        Risponderemo entro 24 ore lavorative · info@sanpietroformaggi.com
+        Risponderemo entro 24 ore lavorative · sanpietroformaggi@gmail.com
       </p>
     </form>
   )

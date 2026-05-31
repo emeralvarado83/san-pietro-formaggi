@@ -57,11 +57,11 @@ export default function ContattiPage() {
                     Email
                   </p>
                   <a
-                    href="mailto:info@sanpietroformaggi.com"
+                    href="mailto:sanpietroformaggi@gmail.com"
                     className="text-sm transition-colors duration-200 hover:text-[#DD4F22]"
                     style={{ color: '#2D2D2E' }}
                   >
-                    info@sanpietroformaggi.com
+                    sanpietroformaggi@gmail.com
                   </a>
                 </div>
 

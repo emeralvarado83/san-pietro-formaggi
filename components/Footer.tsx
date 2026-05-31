@@ -21,7 +21,7 @@ export default function Footer() {
               </p>
             </div>
             <p className="text-sm leading-relaxed" style={{ color: '#E8DDD0', opacity: 0.8 }}>
-              Da generazioni produciamo formaggi artigianali nel cuore della Sicilia, nel rispetto della tradizione.
+              Da generazioni lavoriamo formaggi artigianali nel cuore della Sicilia, nel rispetto della tradizione.
             </p>
           </div>
 
@@ -88,11 +88,11 @@ export default function Footer() {
               </p>
               <p>
                 <a
-                  href="mailto:info@sanpietroformaggi.com"
+                  href="mailto:sanpietroformaggi@gmail.com"
                   className="link-gold"
                   style={{ color: '#E8DDD0' }}
                 >
-                  info@sanpietroformaggi.com
+                  sanpietroformaggi@gmail.com
                 </a>
               </p>
               <p style={{ opacity: 0.6 }}>P.IVA 06734000828</p>

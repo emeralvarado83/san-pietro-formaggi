@@ -27,7 +27,7 @@ const localBusinessSchema = {
     "Azienda familiare di Castronovo di Sicilia (PA). Produttore di formaggi artigianali siciliani: pecorini, caciocavalli, provole, ricotte e la Tuma Canziata.",
   url: BASE_URL,
   telephone: '+390918217240',
-  email: 'info@sanpietroformaggi.com',
+  email: 'sanpietroformaggi@gmail.com',
   vatID: 'IT06734000828',
   address: {
     '@type': 'PostalAddress',

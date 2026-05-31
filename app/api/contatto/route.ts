@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Il messaggio è troppo breve.' }, { status: 400 })
     }
 
-    const toEmail = process.env.CONTACT_EMAIL || 'info@sanpietroformaggi.com'
+    const toEmail = process.env.CONTACT_EMAIL || 'sanpietroformaggi@gmail.com'
 
     const { error } = await getResend().emails.send({
       from: 'San Pietro Formaggi <onboarding@resend.dev>',
