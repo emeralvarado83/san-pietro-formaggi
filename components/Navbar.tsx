@@ -24,10 +24,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  useEffect(() => {
-    setIsOpen(false)
-  }, [pathname])
-
   return (
     <header
       className="sticky top-0 z-50 transition-all duration-300"
@@ -92,7 +88,7 @@ export default function Navbar() {
 
             {/* Hamburger */}
             <button
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => setIsOpen((open) => !open)}
               className="md:hidden p-2 flex flex-col justify-center gap-1.5"
               aria-label={isOpen ? 'Chiudi menu' : 'Apri menu'}
               aria-expanded={isOpen}
@@ -134,6 +130,7 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 className="block py-2.5 text-sm tracking-wide"
+                onClick={() => setIsOpen(false)}
                 style={{
                   color: pathname === link.href ? '#DD4F22' : '#2D2D2E',
                   fontWeight: pathname === link.href ? '500' : '400',
@@ -146,6 +143,7 @@ export default function Navbar() {
             <Link
               href="/contatti"
               className="mt-4 block text-center px-4 py-2.5 text-xs tracking-widest uppercase font-medium rounded"
+              onClick={() => setIsOpen(false)}
               style={{ backgroundColor: '#2D2D2E', color: '#FDF8F0' }}
             >
               Richiedi Preventivo

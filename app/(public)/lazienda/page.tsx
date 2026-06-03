@@ -44,7 +44,7 @@ export default function ChiSiamoPage() {
 
             <div>
               <p className="text-xs tracking-widest uppercase font-medium mb-3" style={{ color: '#DD4F22' }}>
-                L'Area di Stoccaggio
+                L&apos;Area di Stoccaggio
               </p>
               <h2 className="font-display text-3xl font-semibold mb-6" style={{ color: '#2D2D2E' }}>
                 La Stagionatura
