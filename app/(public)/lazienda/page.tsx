@@ -1,10 +1,14 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { canonical } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: "L'azienda",
   description: "La storia di San Pietro Formaggi, azienda familiare di Castronovo di Sicilia (PA).",
+  alternates: {
+    canonical: canonical("/lazienda"),
+  },
 }
 
 export default function ChiSiamoPage() {

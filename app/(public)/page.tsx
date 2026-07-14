@@ -4,10 +4,14 @@ import Link from 'next/link'
 import ProductCard from '@/components/ProductCard'
 import AnimateOnScroll from '@/components/AnimateOnScroll'
 import HeroSlider from '@/components/HeroSlider'
+import { canonical } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: {
     absolute: 'San Pietro Formaggi | Formaggi freschi, semistagionati e stagionati siciliani',
+  },
+  alternates: {
+    canonical: canonical('/'),
   },
 }
 
@@ -33,8 +37,24 @@ export default async function HomePage() {
     ? `/i-nostri-formaggi/${tumaCanziata.slug}`
     : '/i-nostri-formaggi'
 
+  const itemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Formaggi artigianali San Pietro Formaggi',
+    itemListElement: prodotti.slice(0, 20).map((product, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      url: canonical(`/i-nostri-formaggi/${product.slug}`),
+      name: product.name,
+    })),
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+      />
       {/* ── HERO SLIDER ── */}
       <HeroSlider />
 

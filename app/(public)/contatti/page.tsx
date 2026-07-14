@@ -1,9 +1,13 @@
 import type { Metadata } from 'next'
 import ContactForm from '@/components/ContactForm'
+import { canonical } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Contatti',
   description: 'Contattaci per richiedere un preventivo sui formaggi artigianali di San Pietro Formaggi.',
+  alternates: {
+    canonical: canonical('/contatti'),
+  },
 }
 
 export default function ContattiPage() {

@@ -1,8 +1,12 @@
 import type { Metadata } from 'next'
+import { canonical } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
   description: 'Informativa sul trattamento dei dati personali di San Pietro Formaggi.',
+  alternates: {
+    canonical: canonical('/privacy'),
+  },
 }
 
 export default function PrivacyPage() {

@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { getRicette, getRicetta } from '@/lib/db'
 import ShareButtons from '@/components/ShareButtons'
+import { SITE_URL, canonical } from '@/lib/site'
 
 export async function generateStaticParams() {
   const ricette = await getRicette()
@@ -16,8 +17,12 @@ export async function generateMetadata(props: PageProps<'/ricette/[slug]'>): Pro
   if (!recipe) return {}
   return {
     title: recipe.titolo,
+    alternates: {
+      canonical: canonical(`/ricette/${recipe.slug}`),
+    },
     openGraph: {
       title: recipe.titolo,
+      url: canonical(`/ricette/${recipe.slug}`),
       images: recipe.immagine ? [{ url: recipe.immagine }] : undefined,
     },
     twitter: {
@@ -39,8 +44,37 @@ export default async function RicettaPage(props: PageProps<'/ricette/[slug]'>) {
 
   if (!recipe) notFound()
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: SITE_URL,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Ricette',
+        item: canonical('/ricette'),
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: recipe.titolo,
+        item: canonical(`/ricette/${recipe.slug}`),
+      },
+    ],
+  }
+
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       {/* Breadcrumb */}
       <div
         className="px-5 sm:px-8 lg:px-12 py-4"

@@ -2,10 +2,14 @@ import type { Metadata } from 'next'
 import ProductCard from '@/components/ProductCard'
 import { getProdotti, type Prodotto } from '@/lib/db'
 import { categories, categoryDescriptions } from '@/lib/data'
+import { SITE_URL, canonical } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'I Nostri Formaggi',
   description: 'Scopri tutti i formaggi artigianali di San Pietro Formaggi: freschi, semistagionati e stagionati.',
+  alternates: {
+    canonical: canonical('/i-nostri-formaggi'),
+  },
 }
 
 export const dynamic = 'force-dynamic'
@@ -18,8 +22,31 @@ export default async function CatalogoPage() {
     return acc
   }, {})
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: SITE_URL,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'I Nostri Formaggi',
+        item: canonical('/i-nostri-formaggi'),
+      },
+    ],
+  }
+
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       {/* Page header */}
       <div
         className="py-16 px-5 sm:px-8 text-center"

@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { getProdotti, getProdotto } from '@/lib/db'
 import ShareButtons from '@/components/ShareButtons'
+import { SITE_URL, canonical } from '@/lib/site'
 
 export const dynamic = 'force-dynamic'
 
@@ -19,9 +20,13 @@ export async function generateMetadata(props: PageProps<'/i-nostri-formaggi/[slu
   return {
     title: product.name,
     description: product.descrizioneBreve,
+    alternates: {
+      canonical: canonical(`/i-nostri-formaggi/${product.slug}`),
+    },
     openGraph: {
       title: product.name,
       description: product.descrizioneBreve ?? undefined,
+      url: canonical(`/i-nostri-formaggi/${product.slug}`),
       images: product.immagine ? [{ url: product.immagine }] : undefined,
     },
     twitter: {
@@ -47,8 +52,77 @@ export default async function ProductPage(props: PageProps<'/i-nostri-formaggi/[
 
   const categoryColor = categoryColors[product.categoria] || '#2D2D2E'
 
+  const productSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    description: product.descrizioneBreve ?? undefined,
+    image: product.immagine ? [`${SITE_URL}${product.immagine}`] : undefined,
+    category: product.categoria,
+    brand: {
+      '@type': 'Brand',
+      name: 'San Pietro Formaggi',
+    },
+    manufacturer: {
+      '@type': 'Organization',
+      name: 'San Pietro Formaggi s.r.l.',
+      '@id': `${SITE_URL}/#organization`,
+    },
+    offers: {
+      '@type': 'Offer',
+      availability:
+        product.disponibilita === 'Non disponibile'
+          ? 'https://schema.org/OutOfStock'
+          : 'https://schema.org/InStock',
+      priceCurrency: 'EUR',
+      seller: {
+        '@type': 'Organization',
+        name: 'San Pietro Formaggi s.r.l.',
+      },
+    },
+  }
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: SITE_URL,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'I Nostri Formaggi',
+        item: canonical('/i-nostri-formaggi'),
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: product.categoria,
+        item: `${canonical('/i-nostri-formaggi')}#${product.categoria.toLowerCase()}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: product.name,
+        item: canonical(`/i-nostri-formaggi/${product.slug}`),
+      },
+    ],
+  }
+
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       {/* Breadcrumb */}
       <div
         className="px-5 sm:px-8 lg:px-12 py-4"

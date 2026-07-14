@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Playfair_Display, Lora } from 'next/font/google'
+import { SITE_URL, canonical } from '@/lib/site'
 import './globals.css'
 
 const playfair = Playfair_Display({
@@ -16,7 +17,7 @@ const lora = Lora({
   weight: ['400', '500'],
 })
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://sanpietroformaggi.com'
+const BASE_URL = SITE_URL
 
 const localBusinessSchema = {
   '@context': 'https://schema.org',
@@ -66,6 +67,21 @@ const localBusinessSchema = {
   image: `${BASE_URL}/latticini-formaggi.png`,
 }
 
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${BASE_URL}/#website`,
+  url: BASE_URL,
+  name: 'San Pietro Formaggi',
+  inLanguage: 'it-IT',
+  description:
+    'Formaggi artigianali siciliani prodotti a Castronovo di Sicilia (PA).',
+  publisher: {
+    '@type': 'Organization',
+    '@id': `${BASE_URL}/#organization`,
+  },
+}
+
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
@@ -74,8 +90,12 @@ export const metadata: Metadata = {
   },
   description:
     'Formaggi artigianali prodotti nel cuore della Sicilia, a Castronovo di Sicilia (PA). Pecorini, caciocavalli, ricotte e tradizione casearia siciliana.',
+  alternates: {
+    canonical: canonical('/'),
+  },
   openGraph: {
     type: 'website',
+    url: BASE_URL,
     locale: 'it_IT',
     siteName: 'San Pietro Formaggi',
     title: 'San Pietro Formaggi | Formaggi Siciliani',
@@ -108,6 +128,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
       </body>
     </html>
