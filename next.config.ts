@@ -114,6 +114,26 @@ const nextConfig: NextConfig = {
         destination: '/lazienda',
         permanent: true,
       },
+      {
+        source: '/il-laboratorio',
+        destination: '/lazienda',
+        permanent: true,
+      },
+      {
+        source: '/gdpr-richiedi-dati-personali',
+        destination: '/richiedi-dati',
+        permanent: true,
+      },
+      {
+        source: '/privacidad',
+        destination: '/privacy',
+        permanent: true,
+      },
+      {
+        source: '/wishlist',
+        destination: '/i-nostri-formaggi',
+        permanent: true,
+      },
 
       // ── Legacy WordPress / WooCommerce / YITH query params ──
       {
