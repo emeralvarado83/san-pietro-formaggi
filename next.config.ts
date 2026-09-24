@@ -11,6 +11,19 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // ── Canonical domain: www -> non-www ──
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.sanpietroformaggi.com',
+          },
+        ],
+        destination: 'https://sanpietroformaggi.com/:path*',
+        permanent: true,
+      },
+
       // ── Legacy slugs whose current slug changed ──
       {
         source: '/prodotto/pecorino-semi-stagionato-con-pepe',
@@ -99,6 +112,66 @@ const nextConfig: NextConfig = {
       {
         source: '/l-area-di-stoccaggio',
         destination: '/lazienda',
+        permanent: true,
+      },
+
+      // ── Legacy WordPress / WooCommerce / YITH query params ──
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'query',
+            key: 'action',
+            value: 'yith-woocompare-add-product',
+          },
+        ],
+        destination: '/:path*',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'query',
+            key: 'action',
+            value: 'yith-woocompare-remove-product',
+          },
+        ],
+        destination: '/:path*',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'query',
+            key: 'action',
+            value: 'yith-woocompare-view-table',
+          },
+        ],
+        destination: '/:path*',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'query',
+            key: 'yith_wcwl_action',
+          },
+        ],
+        destination: '/:path*',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'query',
+            key: 'add-to-cart',
+          },
+        ],
+        destination: '/:path*',
         permanent: true,
       },
 
