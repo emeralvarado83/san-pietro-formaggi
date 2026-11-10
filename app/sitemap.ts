@@ -1,8 +1,10 @@
 import type { MetadataRoute } from 'next'
 import { getProdotti, getRicette } from '@/lib/db'
-import { canonical } from '@/lib/site'
+import { SITE_URL, canonical } from '@/lib/site'
 
-export const revalidate = 3600
+// Render on request: at build time (Dokploy/nixpacks) the database is not
+// reachable, so a build-time sitemap would be cached with no products/recipes.
+export const dynamic = 'force-dynamic'
 
 /** Most recent `updatedAt` of a list, or undefined if the list is empty. */
 function latest(items: { updatedAt: Date }[]): Date | undefined {
@@ -20,7 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // lastModified must reflect real content changes: a date that is always
   // "now" is ignored by Google. Static pages without a reliable date omit it.
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: canonical('/'), lastModified: lastContent },
+    { url: SITE_URL.replace(/\/$/, ''), lastModified: lastContent },
     { url: canonical('/i-nostri-formaggi'), lastModified: lastProduct },
     { url: canonical('/ricette'), lastModified: lastRecipe },
     { url: canonical('/lazienda') },

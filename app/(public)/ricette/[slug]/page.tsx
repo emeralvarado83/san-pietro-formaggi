@@ -31,7 +31,7 @@ function recipeDescription(
 ): string {
   return (
     metaDescription(indicazioni) ||
-    metaDescription(`${titolo}: ricetta siciliana con i formaggi San Pietro. ${stripHtml(preparazione)}`)
+    metaDescription(`${titolo}: ricetta siciliana con i formaggi San Pietro. ${htmlToLines(preparazione).join(' ')}`)
   )
 }
 
