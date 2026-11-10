@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { getRicette, getRicetta } from '@/lib/db'
 import ShareButtons from '@/components/ShareButtons'
-import { SITE_URL, canonical } from '@/lib/site'
+import { SITE_URL, absoluteUrl, canonical, metaDescription, pageMetadata, stripHtml } from '@/lib/site'
 
 export async function generateStaticParams() {
   const ricette = await getRicette()
@@ -15,27 +15,42 @@ export async function generateMetadata(props: PageProps<'/ricette/[slug]'>): Pro
   const { slug } = await props.params
   const recipe = await getRicetta(slug)
   if (!recipe) return {}
-  return {
+  return pageMetadata({
     title: recipe.titolo,
-    alternates: {
-      canonical: canonical(`/ricette/${recipe.slug}`),
-    },
-    openGraph: {
-      title: recipe.titolo,
-      url: canonical(`/ricette/${recipe.slug}`),
-      images: recipe.immagine ? [{ url: recipe.immagine }] : undefined,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: recipe.titolo,
-      images: recipe.immagine ? [recipe.immagine] : undefined,
-    },
-  }
+    description: recipeDescription(recipe.titolo, recipe.indicazioni, recipe.preparazione),
+    path: `/ricette/${recipe.slug}`,
+    image: recipe.immagine,
+    type: 'article',
+  })
+}
+
+function recipeDescription(
+  titolo: string,
+  indicazioni: string | null,
+  preparazione: string | null,
+): string {
+  return (
+    metaDescription(indicazioni) ||
+    metaDescription(`${titolo}: ricetta siciliana con i formaggi San Pietro. ${stripHtml(preparazione)}`)
+  )
 }
 
 function cleanHtml(html: string | null): string {
   if (!html) return ''
   return html.replace(/&nbsp;/g, ' ')
+}
+
+/**
+ * Split rich-text HTML (lists, paragraphs, line breaks) into plain-text lines,
+ * dropping sub-headings such as "<p><strong>Per il sugo</strong></p>" or "Polpette:".
+ */
+function htmlToLines(html: string | null): string[] {
+  if (!html) return []
+  return html
+    .split(/<\/li>|<\/p>|<br\s*\/?>|\n/i)
+    .filter((chunk) => !/^\s*(<[^>]+>\s*)*<(strong|b)>[^<]*<\/(strong|b)>(\s*<[^>]+>)*\s*$/i.test(chunk))
+    .map((line) => stripHtml(line))
+    .filter((line) => line.length > 0 && !line.endsWith(':'))
 }
 
 export default async function RicettaPage(props: PageProps<'/ricette/[slug]'>) {
@@ -69,8 +84,37 @@ export default async function RicettaPage(props: PageProps<'/ricette/[slug]'>) {
     ],
   }
 
+  const ingredients = htmlToLines(recipe.ingredienti)
+  const steps = htmlToLines(recipe.preparazione)
+
+  const recipeSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Recipe',
+    name: recipe.titolo,
+    description: recipeDescription(recipe.titolo, recipe.indicazioni, recipe.preparazione),
+    image: recipe.immagine ? [absoluteUrl(recipe.immagine)] : undefined,
+    url: canonical(`/ricette/${recipe.slug}`),
+    datePublished: recipe.createdAt.toISOString(),
+    dateModified: recipe.updatedAt.toISOString(),
+    inLanguage: 'it-IT',
+    recipeCuisine: 'Siciliana',
+    author: {
+      '@type': 'Organization',
+      name: 'San Pietro Formaggi s.r.l.',
+      '@id': `${SITE_URL}/#organization`,
+    },
+    recipeIngredient: ingredients.length ? ingredients : undefined,
+    recipeInstructions: steps.length
+      ? steps.map((text, i) => ({ '@type': 'HowToStep', position: i + 1, text }))
+      : undefined,
+  }
+
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(recipeSchema) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}

@@ -2,20 +2,18 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getRicette } from '@/lib/db'
-import { canonical } from '@/lib/site'
+import { pageMetadata } from '@/lib/site'
 
 function stripHtml(html: string | null): string {
   if (!html) return ''
   return html.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim()
 }
 
-export const metadata: Metadata = {
-  title: 'Ricette',
-  description: 'Ricette tradizionali siciliane con i formaggi artigianali di San Pietro Formaggi.',
-  alternates: {
-    canonical: canonical('/ricette'),
-  },
-}
+export const metadata: Metadata = pageMetadata({
+  title: "Ricette",
+  description: "Ricette tradizionali siciliane con i formaggi artigianali di San Pietro Formaggi.",
+  path: '/ricette',
+})
 
 export const dynamic = 'force-dynamic'
 

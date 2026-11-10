@@ -2,15 +2,13 @@ import type { Metadata } from 'next'
 import ProductCard from '@/components/ProductCard'
 import { getProdotti, type Prodotto } from '@/lib/db'
 import { categories, categoryDescriptions } from '@/lib/data'
-import { SITE_URL, canonical } from '@/lib/site'
+import { SITE_URL, canonical, pageMetadata } from '@/lib/site'
 
-export const metadata: Metadata = {
-  title: 'I Nostri Formaggi',
-  description: 'Scopri tutti i formaggi artigianali di San Pietro Formaggi: freschi, semistagionati e stagionati.',
-  alternates: {
-    canonical: canonical('/i-nostri-formaggi'),
-  },
-}
+export const metadata: Metadata = pageMetadata({
+  title: "I Nostri Formaggi",
+  description: "Scopri tutti i formaggi artigianali siciliani di San Pietro Formaggi: pecorini freschi, semistagionati e stagionati, caciocavalli e ricotte.",
+  path: '/i-nostri-formaggi',
+})
 
 export const dynamic = 'force-dynamic'
 

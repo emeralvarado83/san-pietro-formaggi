@@ -1,13 +1,11 @@
 import type { Metadata } from 'next'
-import { canonical } from '@/lib/site'
+import { pageMetadata } from '@/lib/site'
 
-export const metadata: Metadata = {
-  title: 'Disclaimer',
-  description: 'Disclaimer e condizioni di utilizzo del sito San Pietro Formaggi.',
-  alternates: {
-    canonical: canonical('/disclaimer'),
-  },
-}
+export const metadata: Metadata = pageMetadata({
+  title: "Disclaimer",
+  description: "Disclaimer e condizioni di utilizzo del sito San Pietro Formaggi.",
+  path: '/disclaimer',
+})
 
 export default function DisclaimerPage() {
   return (

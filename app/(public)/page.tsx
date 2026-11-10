@@ -4,16 +4,14 @@ import Link from 'next/link'
 import ProductCard from '@/components/ProductCard'
 import AnimateOnScroll from '@/components/AnimateOnScroll'
 import HeroSlider from '@/components/HeroSlider'
-import { canonical } from '@/lib/site'
+import { canonical, pageMetadata } from '@/lib/site'
 
-export const metadata: Metadata = {
-  title: {
-    absolute: 'San Pietro Formaggi | Formaggi freschi, semistagionati e stagionati siciliani',
-  },
-  alternates: {
-    canonical: canonical('/'),
-  },
-}
+export const metadata: Metadata = pageMetadata({
+  title: "Formaggi Siciliani Artigianali | San Pietro Formaggi",
+  description: "Formaggi artigianali prodotti nel cuore della Sicilia, a Castronovo di Sicilia (PA). Pecorini, caciocavalli, ricotte e tradizione casearia siciliana.",
+  path: '/',
+  absoluteTitle: true,
+})
 
 export const dynamic = 'force-dynamic'
 

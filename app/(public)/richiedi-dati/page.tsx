@@ -1,14 +1,12 @@
 import type { Metadata } from 'next'
 import RichiediDatiForm from '@/components/RichiediDatiForm'
-import { canonical } from '@/lib/site'
+import { pageMetadata } from '@/lib/site'
 
-export const metadata: Metadata = {
-  title: 'Richiedi Dati Personali',
-  description: 'Richiedi l\'accesso ai tuoi dati personali in possesso di San Pietro Formaggi, ai sensi del GDPR.',
-  alternates: {
-    canonical: canonical('/richiedi-dati'),
-  },
-}
+export const metadata: Metadata = pageMetadata({
+  title: "Richiedi Dati Personali",
+  description: "Richiedi l'accesso ai tuoi dati personali in possesso di San Pietro Formaggi, ai sensi del GDPR.",
+  path: '/richiedi-dati',
+})
 
 export default function RichiediDatiPage() {
   return (

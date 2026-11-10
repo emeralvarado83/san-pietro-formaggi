@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { getProdotti, getProdotto } from '@/lib/db'
 import ShareButtons from '@/components/ShareButtons'
-import { SITE_URL, canonical } from '@/lib/site'
+import { SITE_URL, absoluteUrl, canonical, metaDescription, pageMetadata, stripHtml } from '@/lib/site'
 
 export const dynamic = 'force-dynamic'
 
@@ -17,25 +17,14 @@ export async function generateMetadata(props: PageProps<'/i-nostri-formaggi/[slu
   const { slug } = await props.params
   const product = await getProdotto(slug)
   if (!product) return {}
-  return {
+  return pageMetadata({
     title: product.name,
-    description: product.descrizioneBreve,
-    alternates: {
-      canonical: canonical(`/i-nostri-formaggi/${product.slug}`),
-    },
-    openGraph: {
-      title: product.name,
-      description: product.descrizioneBreve ?? undefined,
-      url: canonical(`/i-nostri-formaggi/${product.slug}`),
-      images: product.immagine ? [{ url: product.immagine }] : undefined,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: product.name,
-      description: product.descrizioneBreve ?? undefined,
-      images: product.immagine ? [product.immagine] : undefined,
-    },
-  }
+    description:
+      metaDescription(product.descrizioneBreve) ||
+      `${product.name}: formaggio artigianale siciliano di San Pietro Formaggi, Castronovo di Sicilia (PA).`,
+    path: `/i-nostri-formaggi/${product.slug}`,
+    image: product.immagine,
+  })
 }
 
 const categoryColors: Record<string, string> = {
@@ -56,8 +45,8 @@ export default async function ProductPage(props: PageProps<'/i-nostri-formaggi/[
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: product.name,
-    description: product.descrizioneBreve ?? undefined,
-    image: product.immagine ? [`${SITE_URL}${product.immagine}`] : undefined,
+    description: stripHtml(product.descrizioneBreve) || undefined,
+    image: product.immagine ? [absoluteUrl(product.immagine)] : undefined,
     category: product.categoria,
     brand: {
       '@type': 'Brand',
@@ -68,18 +57,8 @@ export default async function ProductPage(props: PageProps<'/i-nostri-formaggi/[
       name: 'San Pietro Formaggi s.r.l.',
       '@id': `${SITE_URL}/#organization`,
     },
-    offers: {
-      '@type': 'Offer',
-      availability:
-        product.disponibilita === 'Non disponibile'
-          ? 'https://schema.org/OutOfStock'
-          : 'https://schema.org/InStock',
-      priceCurrency: 'EUR',
-      seller: {
-        '@type': 'Organization',
-        name: 'San Pietro Formaggi s.r.l.',
-      },
-    },
+    // No `offers`: the site publishes no prices, and an Offer without `price`
+    // is reported as an error ("Missing field price") in Search Console.
   }
 
   const breadcrumbSchema = {
